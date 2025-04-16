@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>문의 상세 - 관리자</title>
+    <link rel="stylesheet" href="/css/admin.css" />
+    <style>
+        .inquiry-detail {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .inquiry-header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .inquiry-title {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .inquiry-meta {
+            color: #777;
+            font-size: 14px;
+        }
+        .inquiry-content {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .inquiry-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .inquiry-actions button, .inquiry-actions a {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
+        .reply-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .back-btn {
+            background-color: #95a5a6;
+            color: white;
+        }
+        .status-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .alert-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+        .alert-danger {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>문의 상세</h1>
+        
+        <div class="alert alert-success" th:if="${successMessage}" th:text="${successMessage}"></div>
+        <div class="alert alert-danger" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+        
+        <div class="inquiry-detail" th:if="${inquiry}">
+            <div class="inquiry-header">
+                <h2 class="inquiry-title" th:text="${inquiry.subject}">문의 제목</h2>
+                <div class="inquiry-meta">
+                    <span th:text="${inquiry.name}">이름</span> | 
+                    <span th:text="${inquiry.email}">이메일</span> | 
+                    <span th:if="${inquiry.phone}" th:text="${inquiry.phone}">전화번호</span>
+                    <span th:text="${#dates.format(inquiry.createdDate, 'yyyy-MM-dd HH:mm')}">날짜</span> | 
+                    상태: <span th:class="${inquiry.status == 'NEW'} ? 'new' : (${inquiry.status == 'IN_PROGRESS'} ? 'in-progress' : 'completed')"
+                             th:text="${inquiry.status == 'NEW'} ? '신규' : (${inquiry.status == 'IN_PROGRESS'} ? '처리중' : '완료')">
+                        신규
+                    </span>
+                </div>
+            </div>
+            
+            <div class="inquiry-content">
+                <p th:text="${inquiry.message}">문의 내용</p>
+            </div>
+            
+            <div class="inquiry-actions">
+                <a th:href="@{'/admin/inquiries/' + ${inquiry.inquiryId} + '/reply'}" class="reply-btn">답변하기</a>
+                
+                <form th:if="${inquiry.status == 'NEW'}" th:action="@{'/admin/inquiries/' + ${inquiry.inquiryId} + '/status'}" method="post" style="display: inline;">
+                    <input type="hidden" name="status" value="IN_PROGRESS" />
+                    <button type="submit" class="status-btn">처리중으로 변경</button>
+                </form>
+                
+                <form th:if="${inquiry.status == 'IN_PROGRESS'}" th:action="@{'/admin/inquiries/' + ${inquiry.inquiryId} + '/status'}" method="post" style="display: inline;">
+                    <input type="hidden" name="status" value="COMPLETED" />
+                    <button type="submit" class="status-btn">완료로 변경</button>
+                </form>
+                
+                <a th:href="@{/admin/inquiries}" class="back-btn">목록으로</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

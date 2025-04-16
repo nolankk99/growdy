@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.growdy.web.mapper.TestimonialMapper">
+
+    <!-- 모든 고객 후기 조회 -->
+    <select id="selectAllTestimonials" resultType="com.growdy.web.model.Testimonial">
+        SELECT * FROM testimonial 
+        ORDER BY display_order ASC, created_date DESC
+    </select>
+    
+    <!-- 활성화된 고객 후기만 조회 -->
+    <select id="selectActiveTestimonials" resultType="com.growdy.web.model.Testimonial">
+        SELECT * FROM testimonial 
+        WHERE is_active = TRUE 
+        ORDER BY display_order ASC, created_date DESC
+    </select>
+    
+    <!-- 특정 고객 후기 조회 -->
+    <select id="selectTestimonialById" parameterType="int" resultType="com.growdy.web.model.Testimonial">
+        SELECT * FROM testimonial WHERE testimonial_id = #{testimonialId}
+    </select>
+    
+    <!-- 고객 후기 추가 -->
+    <insert id="insertTestimonial" parameterType="com.growdy.web.model.Testimonial" useGeneratedKeys="true" keyProperty="testimonialId">
+        INSERT INTO testimonial (
+            customer_name, 
+            company, 
+            position, 
+            content, 
+            rating, 
+            image_url, 
+            display_order, 
+            is_active
+        ) VALUES (
+            #{customerName}, 
+            #{company}, 
+            #{position}, 
+            #{content}, 
+            #{rating}, 
+            #{imageUrl}, 
+            #{displayOrder}, 
+            #{isActive}
+        )
+    </insert>
+    
+    <!-- 고객 후기 수정 -->
+    <update id="updateTestimonial" parameterType="com.growdy.web.model.Testimonial">
+        UPDATE testimonial 
+        SET 
+            customer_name = #{customerName},
+            company = #{company},
+            position = #{position},
+            content = #{content},
+            rating = #{rating},
+            image_url = #{imageUrl},
+            display_order = #{displayOrder},
+            is_active = #{isActive}
+        WHERE testimonial_id = #{testimonialId}
+    </update>
+    
+    <!-- 고객 후기 상태 변경 -->
+    <update id="updateTestimonialStatus">
+        UPDATE testimonial 
+        SET is_active = #{isActive} 
+        WHERE testimonial_id = #{testimonialId}
+    </update>
+    
+    <!-- 고객 후기 삭제 -->
+    <delete id="deleteTestimonial" parameterType="int">
+        DELETE FROM testimonial WHERE testimonial_id = #{testimonialId}
+    </delete>
+    
+</mapper> 

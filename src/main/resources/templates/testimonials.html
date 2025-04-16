@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>고객 후기 - 그로우디</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+    <section class="testimonials-section" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">고객 후기</h2>
+            <p class="section-subtitle">그로우디와 함께한 고객들의 이야기를 들어보세요</p>
+            
+            <div class="testimonials-grid" th:if="${not #lists.isEmpty(testimonials)}">
+                <div class="testimonial-card" th:each="testimonial : ${testimonials}">
+                    <div class="testimonial-rating">
+                        <span class="star" th:each="i : ${#numbers.sequence(1, testimonial.rating)}">★</span>
+                    </div>
+                    <p class="testimonial-content" th:text="${testimonial.content}">고객 후기 내용</p>
+                    <div class="testimonial-author">
+                        <img th:if="${testimonial.imageUrl}" th:src="${testimonial.imageUrl}" alt="고객 이미지" class="testimonial-image" />
+                        <div class="testimonial-info">
+                            <h4 class="customer-name" th:text="${testimonial.customerName}">고객명</h4>
+                            <p class="customer-position" th:if="${testimonial.position}">
+                                <span th:text="${testimonial.position}">직급</span>
+                                <span th:if="${testimonial.company}">, </span>
+                                <span th:text="${testimonial.company}" th:if="${testimonial.company}">회사명</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="no-testimonials" th:if="${#lists.isEmpty(testimonials)}">
+                <p>아직 등록된 고객 후기가 없습니다.</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html> 

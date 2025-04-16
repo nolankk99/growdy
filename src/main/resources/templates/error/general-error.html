@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>오류 발생 - 그로우디</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+        .error-container {
+            max-width: 800px;
+            margin: 100px auto;
+            text-align: center;
+            padding: 30px;
+        }
+        .error-icon {
+            font-size: 80px;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+        .error-message {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .error-description {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .error-url {
+            color: #777;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .home-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .home-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">⚠️</div>
+        <div class="error-message" th:text="${errorMessage}">오류가 발생했습니다</div>
+        
+        <div class="error-description">
+            죄송합니다. 요청을 처리하는 중 예기치 않은 문제가 발생했습니다.
+            <br />잠시 후 다시 시도하시거나, 문제가 지속되면 관리자에게 문의해주세요.
+        </div>
+        
+        <div class="error-url" th:if="${url}">
+            요청 URL: <span th:text="${url}">URL</span>
+        </div>
+        
+        <a href="/" class="home-button">홈페이지로 이동</a>
+    </div>
+</body>
+</html> 

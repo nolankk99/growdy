@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>문의 관리 - 관리자</title>
+    <link rel="stylesheet" href="/css/admin.css" />
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .new {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .in-progress {
+            color: #f39c12;
+        }
+        .completed {
+            color: #27ae60;
+        }
+        .action-buttons a {
+            margin-right: 5px;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 3px;
+            display: inline-block;
+            font-size: 12px;
+        }
+        .view-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        .reply-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>문의 관리</h1>
+        
+        <div th:if="${not #lists.isEmpty(inquiries)}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>제목</th>
+                        <th>상태</th>
+                        <th>읽음</th>
+                        <th>접수일</th>
+                        <th>액션</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="inquiry : ${inquiries}">
+                        <td th:text="${inquiry.inquiryId}">1</td>
+                        <td th:text="${inquiry.name}">홍길동</td>
+                        <td th:text="${inquiry.email}">hong@example.com</td>
+                        <td th:text="${inquiry.subject}">서비스 문의</td>
+                        <td>
+                            <span th:class="${inquiry.status == 'NEW'} ? 'new' : (${inquiry.status == 'IN_PROGRESS'} ? 'in-progress' : 'completed')"
+                                  th:text="${inquiry.status == 'NEW'} ? '신규' : (${inquiry.status == 'IN_PROGRESS'} ? '처리중' : '완료')">
+                                신규
+                            </span>
+                        </td>
+                        <td th:text="${inquiry.read} ? '읽음' : '안읽음'">안읽음</td>
+                        <td th:text="${#dates.format(inquiry.createdDate, 'yyyy-MM-dd HH:mm')}">2023-06-01</td>
+                        <td class="action-buttons">
+                            <a th:href="@{'/admin/inquiries/' + ${inquiry.inquiryId}}" class="view-btn">상세보기</a>
+                            <a th:href="@{'/admin/inquiries/' + ${inquiry.inquiryId} + '/reply'}" class="reply-btn">답변하기</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div th:if="${#lists.isEmpty(inquiries)}" class="no-inquiries">
+            <p>등록된 문의가 없습니다.</p>
+        </div>
+    </div>
+</body>
+</html> 

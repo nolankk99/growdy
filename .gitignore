@@ -1,0 +1,102 @@
+### Java ###
+# 컴파일된 클래스 파일
+*.class
+
+# 로그 파일
+*.log
+
+# BlueJ 파일
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# 패키지 파일
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# 가상 머신 충돌 로그
+hs_err_pid*
+replay_pid*
+
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+### STS/Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Windows ###
+# Windows 섬네일 캐시 파일
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# 덤프 파일
+*.stackdump
+
+# 폴더 설정 파일
+[Dd]esktop.ini
+
+# 휴지통 자동 생성 폴더
+$RECYCLE.BIN/
+
+# Windows Installer 파일
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows 바로가기
+*.lnk
+
+### 애플리케이션 설정 ###
+# 로컬 환경 설정(필요 시 주석 해제)
+# src/main/resources/application-local.properties
+
+# 메타데이터
+.metadata/
+
+# 기타 불필요한 파일
+*~
+.merge_file* 
